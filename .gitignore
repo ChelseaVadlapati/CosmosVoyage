@@ -229,6 +229,7 @@ Thumbs.db #thumbnail cache on Windows
 .vscode/*
 !.vscode/tasks.json
 !.vscode/launch.json
+!.vscode/settings.json
 *.code-workspace
 
 ### VisualStudioCode Patch ###
