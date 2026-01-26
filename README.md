@@ -16,9 +16,113 @@ description: A modern space travel booking platform built with FastAPI, PostgreS
 
 # CosmosVoyage 🚀
 
+[![Python](https://img.shields.io/badge/Python-3.13-blue.svg)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.128-green.svg)](https://fastapi.tiangolo.com/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-blue.svg)](https://www.postgresql.org/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 **A Modern Space Travel Booking Platform**
 
 CosmosVoyage is a full-stack web application for a space travel agency built with FastAPI and PostgreSQL. The application features a beautiful web interface for browsing destinations and cruises, plus a comprehensive REST API for programmatic access.
+
+## ✨ Features
+
+- 🌐 **Web Interface** - Beautiful, responsive UI for browsing space destinations and cruises
+- 🔌 **REST API** - Comprehensive API with automatic Swagger/OpenAPI documentation
+- 🗄️ **PostgreSQL Database** - Reliable data storage with SQLModel ORM
+- ☁️ **Azure Ready** - Configured for easy deployment to Azure App Service
+- 🐳 **Dev Container** - Instant development environment setup
+- 🧪 **Testing** - Includes Playwright tests for UI testing
+- 📊 **Monitoring** - Health check endpoints and Azure Monitor integration
+
+## 🚀 Quick Start
+
+See [QUICKSTART.md](QUICKSTART.md) for detailed setup instructions!
+
+**TL;DR:**
+```bash
+# Install PostgreSQL
+brew install postgresql@16
+brew services start postgresql@16
+
+# Create database
+/opt/homebrew/opt/postgresql@16/bin/createdb fastapi_app
+
+# Setup environment
+cp .env.example .env
+# (Edit .env with your settings)
+
+# Install and run
+pip install -e src
+python src/fastapi_app/seed_data.py
+python -m uvicorn fastapi_app:app --reload --port=8000
+```
+
+Visit http://localhost:8000 🎉
+
+## 📚 API Documentation
+
+Once running, access:
+- **Swagger UI**: http://localhost:8000/api/docs
+- **ReDoc**: http://localhost:8000/api/redoc
+- **Health Check**: http://localhost:8000/api/health
+
+## 🛠️ Tech Stack
+
+- **Backend**: FastAPI, Python 3.13
+- **Database**: PostgreSQL 16, SQLModel
+- **Frontend**: Jinja2 Templates, Bootstrap
+- **Cloud**: Azure App Service, Azure Database for PostgreSQL
+- **DevOps**: GitHub Actions, Azure Developer CLI (azd)
+
+## 📁 Project Structure
+
+```
+CosmosVoyage/
+├── src/
+│   ├── fastapi_app/        # Main application
+│   │   ├── app.py          # FastAPI routes and endpoints
+│   │   ├── models.py       # Database models
+│   │   └── seed_data.py    # Database seeding script
+│   ├── templates/          # HTML templates
+│   ├── static/             # CSS, JS, images
+│   └── tests/              # Test suites
+├── infra/                  # Azure infrastructure (Bicep)
+└── .devcontainer/          # Dev container configuration
+```
+
+## 🧪 Running Tests
+
+```bash
+pip install -r requirements-dev.txt
+python -m playwright install chromium --with-deps
+pytest
+```
+
+## ☁️ Deployment to Azure
+
+This project is configured for deployment with the Azure Developer CLI (azd):
+
+```bash
+azd auth login
+azd up
+```
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🌟 Acknowledgments
+
+Built with FastAPI, PostgreSQL, and Azure technologies.
+
+---
+
+**Made with ❤️ for space travel enthusiasts**
 
 ## Opening the project
 
