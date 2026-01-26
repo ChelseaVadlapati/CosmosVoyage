@@ -2,13 +2,13 @@ name: Deploy to Azure with azd
 
 on:
     workflow_dispatch:
-    push:
-      branches:
-        - main
-        - cruft/update
+    # Disabled automatic deployment on push - run manually or configure Azure credentials first
+    # push:
+    #   branches:
+    #     - main
 
 # GitHub Actions workflow to deploy to Azure using azd
-# To configure required secrets for connecting to Azure, simply run `azd pipeline config`
+# To configure required secrets for connecting to Azure, run: azd pipeline config
 
 # Set up permissions for deploying with secretless Azure federated credentials
 # https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Clinux#set-up-azure-login-with-openid-connect-authentication
@@ -19,6 +19,8 @@ permissions:
 jobs:
     build:
       runs-on: ubuntu-latest
+      # Only run if Azure credentials are configured
+      if: vars.AZURE_CLIENT_ID != '' || secrets.AZURE_CREDENTIALS != ''
       outputs:
         uri: ${{ steps.output.outputs.uri }}
       env:
