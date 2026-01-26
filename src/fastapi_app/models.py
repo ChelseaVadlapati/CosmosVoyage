@@ -4,7 +4,6 @@ import os
 import typing
 
 from dotenv import load_dotenv
-
 from sqlmodel import Field, Relationship, SQLModel, create_engine
 
 load_dotenv()
@@ -14,8 +13,7 @@ def _require_env(name: str, allow_empty: bool = False) -> str:
     value = os.environ.get(name)
     if value is None or (value == "" and not allow_empty):
         raise RuntimeError(
-            "Missing required environment variable(s) for Postgres connection. "
-            f"Please set {name} (see .env.example)."
+            f"Missing required environment variable(s) for Postgres connection. Please set {name} (see .env.example)."
         )
     return value or ""
 
@@ -39,12 +37,12 @@ def create_db_and_tables():
 
 
 class CruiseDestinationLink(SQLModel, table=True):
-    destination_id: typing.Optional[int] = Field(
+    destination_id: int | None = Field(
         default=None,
         foreign_key="destination.id",
         primary_key=True,
     )
-    cruise_id: typing.Optional[int] = Field(
+    cruise_id: int | None = Field(
         default=None,
         foreign_key="cruise.id",
         primary_key=True,
@@ -52,10 +50,10 @@ class CruiseDestinationLink(SQLModel, table=True):
 
 
 class Destination(SQLModel, table=True):
-    id: typing.Optional[int] = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None, primary_key=True)
     name: str = Field(index=True)
-    subtitle: typing.Optional[str]
-    description: typing.Optional[str]
+    subtitle: str | None
+    description: str | None
     cruises: typing.List["Cruise"] = Relationship(
         back_populates="destinations",
         link_model=CruiseDestinationLink,
@@ -66,10 +64,10 @@ class Destination(SQLModel, table=True):
 
 
 class Cruise(SQLModel, table=True):
-    id: typing.Optional[int] = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None, primary_key=True)
     name: str = Field(index=True)
-    description: typing.Optional[str]
-    subtitle: typing.Optional[str]
+    description: str | None
+    subtitle: str | None
     destinations: typing.List["Destination"] = Relationship(
         back_populates="cruises",
         link_model=CruiseDestinationLink,
@@ -80,7 +78,7 @@ class Cruise(SQLModel, table=True):
 
 
 class InfoRequest(SQLModel, table=True):
-    id: typing.Optional[int] = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None, primary_key=True)
     name: str = Field(index=True)
     email: str
     notes: str

@@ -3,7 +3,7 @@ import pathlib
 from typing import Annotated
 
 from azure.monitor.opentelemetry import configure_azure_monitor
-from fastapi import FastAPI, Form, Request, HTTPException
+from fastapi import FastAPI, Form, HTTPException, Request
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -19,7 +19,7 @@ app = FastAPI(
     description="A modern space travel booking platform with FastAPI and PostgreSQL",
     version="1.0.0",
     docs_url="/api/docs",
-    redoc_url="/api/redoc"
+    redoc_url="/api/redoc",
 )
 parent_path = pathlib.Path(__file__).parent.parent
 app.mount("/mount", StaticFiles(directory=parent_path / "static"), name="static")
@@ -34,14 +34,9 @@ templates.env.globals["url_for"] = app.url_path_for
 async def http_exception_handler(request: Request, exc: HTTPException):
     if "text/html" in request.headers.get("accept", ""):
         return templates.TemplateResponse(
-            "base.html",
-            {"request": request, "error": exc.detail},
-            status_code=exc.status_code
+            "base.html", {"request": request, "error": exc.detail}, status_code=exc.status_code
         )
-    return JSONResponse(
-        status_code=exc.status_code,
-        content={"detail": exc.detail}
-    )
+    return JSONResponse(status_code=exc.status_code, content={"detail": exc.detail})
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -127,7 +122,7 @@ def api_get_destination(pk: int):
             "id": destination.id,
             "name": destination.name,
             "description": destination.description,
-            "cruises": [{"id": c.id, "name": c.name} for c in destination.cruises]
+            "cruises": [{"id": c.id, "name": c.name} for c in destination.cruises],
         }
 
 
@@ -150,7 +145,7 @@ def api_get_cruise(pk: int):
             "id": cruise.id,
             "name": cruise.name,
             "description": cruise.description,
-            "destinations": [{"id": d.id, "name": d.name} for d in cruise.destinations]
+            "destinations": [{"id": d.id, "name": d.name} for d in cruise.destinations],
         }
 
 
